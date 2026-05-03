@@ -1,0 +1,28 @@
+{
+  "name": "contafacil-accounting",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Sistema contable simple — transacciones, facturas, cuentas y reportes financieros para PYMEs.",
+  "author": "Juan José Maya (devMaya) <juanjosemorales2510@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://juanmaya25.github.io/contafacil-accounting",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Juanmaya25/contafacil-accounting.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.12.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}
