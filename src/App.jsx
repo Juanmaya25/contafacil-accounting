@@ -16,7 +16,7 @@ const INIT_TX = [
   { id:7,  date:'2025-04-28', desc:'Servicios públicos - Abril',       cat:'Gastos fijos', type:'expense', amount:380000,  account:'Davivienda',   invoice:'' },
   { id:8,  date:'2025-04-28', desc:'Comisión ventas - Representante',  cat:'Comisiones',   type:'expense', amount:285000,  account:'Bancolombia',  invoice:'' },
   { id:9,  date:'2025-04-27', desc:'Venta consultoría - GHI Corp',     cat:'Ingresos',     type:'income',  amount:3100000, account:'Bancolombia',  invoice:'FAC-038' },
-  { id:10, date:'2025-04-26', desc:'Material oficina',                  cat:'Compras',      type:'expense', amount:145000,  account:'Caja menor',   invoice:'' },
+  { id:10, date:'2025-04-26', desc:'Material oficina',                 cat:'Compras',      type:'expense', amount:145000,  account:'Caja menor',   invoice:'' },
 ];
 
 const INIT_INVOICES = [
@@ -29,10 +29,10 @@ const INIT_INVOICES = [
 ];
 
 const INIT_ACCOUNTS = [
-  { id:1, name:'Bancolombia Ahorros',  number:'***4521',  balance:18450000, type:'bank',    color:'#fbbf24', currency:'COP' },
-  { id:2, name:'Davivienda Corriente', number:'***8834',  balance:6200000,  type:'bank',    color:'#ef4444', currency:'COP' },
-  { id:3, name:'Caja menor',           number:'Efectivo', balance:850000,   type:'cash',    color:'#22c55e', currency:'COP' },
-  { id:4, name:'Cuentas por cobrar',   number:'Clientes', balance:9300000,  type:'receive', color:'#3b82f6', currency:'COP' },
+  { id:1, name:'Bancolombia Ahorros',  number:'***4521',  balance:18450000, type:'bank',    color:'#1d4ed8', currency:'COP' },
+  { id:2, name:'Davivienda Corriente', number:'***8834',  balance:6200000,  type:'bank',    color:'#dc2626', currency:'COP' },
+  { id:3, name:'Caja menor',           number:'Efectivo', balance:850000,   type:'cash',    color:'#059669', currency:'COP' },
+  { id:4, name:'Cuentas por cobrar',   number:'Clientes', balance:9300000,  type:'receive', color:'#7c3aed', currency:'COP' },
 ];
 
 const MONTHLY = [
@@ -45,69 +45,105 @@ const MONTHLY = [
 ];
 
 const CATEGORIES = [
-  { name:'Nómina',       pct:38, color:'#f87171', amount:14100000 },
-  { name:'Compras',      pct:28, color:'#fb923c', amount:10400000 },
-  { name:'Gastos fijos', pct:20, color:'#facc15', amount:7400000 },
-  { name:'Comisiones',   pct:9,  color:'#a78bfa', amount:3300000 },
-  { name:'Otros',        pct:5,  color:'#94a3b8', amount:1900000 },
+  { name:'Nómina',       pct:38, color:'#dc2626', amount:14100000 },
+  { name:'Compras',      pct:28, color:'#ea580c', amount:10400000 },
+  { name:'Gastos fijos', pct:20, color:'#ca8a04', amount:7400000 },
+  { name:'Comisiones',   pct:9,  color:'#7c3aed', amount:3300000 },
+  { name:'Otros',        pct:5,  color:'#475569', amount:1900000 },
 ];
 
+// PALETTE: navy corporativo + acento dorado, mucho whitespace
 const themes = {
-  light: { bg:'#f9fafb', bg2:'#ffffff', bg3:'#f3f4f6', accent:'#1d4ed8', accent2:'#059669', red:'#dc2626', text:'#111827', text2:'#6b7280', text3:'#9ca3af', border:'#e5e7eb', kpiPos:'#ecfdf5', kpiNeg:'#fef2f2', kpiNeutral:'#eff6ff' },
-  dark:  { bg:'#0f172a', bg2:'#1e293b', bg3:'#334155', accent:'#60a5fa', accent2:'#34d399', red:'#f87171', text:'#f1f5f9', text2:'#94a3b8', text3:'#64748b', border:'#334155', kpiPos:'#064e3b22', kpiNeg:'#7f1d1d22', kpiNeutral:'#1e3a8a22' },
+  light: {
+    bg:        '#f1f5f9',
+    bg2:       '#ffffff',
+    bg3:       '#f8fafc',
+    primary:   '#0f172a',          // navy oscuro
+    primarySoft:'#1e293b',
+    accent:    '#1d4ed8',          // azul corporativo
+    accent2:   '#0891b2',
+    success:   '#059669',
+    danger:    '#dc2626',
+    warning:   '#d97706',
+    text:      '#0f172a',
+    text2:     '#475569',
+    text3:     '#94a3b8',
+    border:    '#e2e8f0',
+    borderDark:'#cbd5e1',
+    shadow:    '0 1px 3px rgba(15,23,42,.08), 0 1px 2px rgba(15,23,42,.04)',
+    shadowMd:  '0 4px 12px rgba(15,23,42,.08)',
+    shadowLg:  '0 12px 32px rgba(15,23,42,.12)',
+  },
+  dark: {
+    bg:        '#0a0f1a',
+    bg2:       '#0f172a',
+    bg3:       '#1e293b',
+    primary:   '#f1f5f9',
+    primarySoft:'#cbd5e1',
+    accent:    '#60a5fa',
+    accent2:   '#22d3ee',
+    success:   '#34d399',
+    danger:    '#f87171',
+    warning:   '#fbbf24',
+    text:      '#f1f5f9',
+    text2:     '#94a3b8',
+    text3:     '#64748b',
+    border:    '#1e293b',
+    borderDark:'#334155',
+    shadow:    '0 1px 3px rgba(0,0,0,.3)',
+    shadowMd:  '0 4px 12px rgba(0,0,0,.4)',
+    shadowLg:  '0 12px 32px rgba(0,0,0,.5)',
+  },
 };
 
 const invoiceStatus = {
-  paid:    { l:'Pagada',    bg:'rgba(16,185,129,.15)', c:'#059669' },
-  pending: { l:'Pendiente', bg:'rgba(251,191,36,.15)', c:'#d97706' },
-  overdue: { l:'Vencida',   bg:'rgba(239,68,68,.15)',  c:'#dc2626' },
+  paid:    { l:'Pagada',    bg:'#d1fae5', c:'#059669', dot:'#10b981' },
+  pending: { l:'Pendiente', bg:'#fef3c7', c:'#d97706', dot:'#f59e0b' },
+  overdue: { l:'Vencida',   bg:'#fee2e2', c:'#dc2626', dot:'#ef4444' },
 };
 
 const fmt = n => '$' + Number(n || 0).toLocaleString('es-CO');
-const accountIcon = type => type === 'bank' ? '🏦' : type === 'cash' ? '💵' : '📋';
 
-// ─── COMPONENTES TOP-LEVEL ──────────────────────────────────────────
+// ─── SVG ICONS ──────────────────────────────────────────────────────
+const Icon = {
+  pencil: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>,
+  trash: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>,
+  check: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  download: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+  plus: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  search: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+  alert: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
+  close: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  arrowUp: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+  arrowDown: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>,
+  bank: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>,
+  cash: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>,
+  receipt: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+  sun: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
+  moon: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+  building: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><path d="M10 22v-4h4v4"/></svg>,
+};
 
-function KPI({ label, value, sub, color, bg, icon, trend, C, S }) {
-  return (
-    <div
-      style={{...S.card, background: bg || C.bg2, transition:'transform .2s'}}
-      onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-      onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-    >
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10}}>
-        <div style={{fontSize:11, color:C.text2, textTransform:'uppercase', letterSpacing:'.5px'}}>{label}</div>
-        {icon && <span style={{fontSize:18, opacity:.6}}>{icon}</span>}
-      </div>
-      <div style={{fontSize:20, fontWeight:700, color, fontFamily:'monospace', marginBottom:4}}>{value}</div>
-      <div style={{fontSize:12, color:C.text3, display:'flex', alignItems:'center', gap:6}}>
-        {trend !== undefined && trend !== null && (
-          <span style={{color: trend > 0 ? C.accent2 : C.red, fontWeight:700}}>
-            {trend > 0 ? '↑' : '↓'}{Math.abs(trend)}%
-          </span>
-        )}
-        {sub}
-      </div>
-    </div>
-  );
-}
+// ─── REUSABLE COMPONENTS ────────────────────────────────────────────
 
 function Modal({ title, onSave, onClose, children, size='md', C, S }) {
   return (
     <div
-      style={{position:'fixed', top:0, left:0, width:'100%', height:'100%', background:'rgba(0,0,0,.5)', zIndex:999, display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto'}}
+      style={{position:'fixed', inset:0, background:'rgba(15, 23, 42, .55)', zIndex:999, display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'40px 16px', overflowY:'auto'}}
       onClick={onClose}
     >
       <div
-        style={{...S.card, width:'100%', maxWidth: size==='lg' ? 720 : 520, boxShadow:'0 30px 80px rgba(0,0,0,.3)'}}
+        style={{background:C.bg2, borderRadius:8, padding:0, width:'100%', maxWidth: size==='lg' ? 720 : 540, boxShadow:C.shadowLg, border:`1px solid ${C.border}`}}
         onClick={e => e.stopPropagation()}
       >
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:18}}>
-          <h2 style={{fontSize:16, fontWeight:700, margin:0, color:C.text}}>{title}</h2>
-          <button onClick={onClose} aria-label="Cerrar" style={{background:'transparent', border:'none', color:C.text2, fontSize:22, cursor:'pointer', lineHeight:1, padding:0}}>×</button>
+        <div style={{padding:'20px 28px', borderBottom:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+          <h2 style={{fontSize:18, fontWeight:600, margin:0, color:C.text, letterSpacing:'-.3px'}}>{title}</h2>
+          <button onClick={onClose} aria-label="Cerrar" style={{background:'transparent', border:'none', color:C.text2, cursor:'pointer', padding:6, borderRadius:6, display:'flex'}}>
+            {Icon.close()}
+          </button>
         </div>
-        {children}
-        <div style={{display:'flex', gap:10, justifyContent:'flex-end', marginTop:22}}>
+        <div style={{padding:'24px 28px'}}>{children}</div>
+        <div style={{padding:'16px 28px', borderTop:`1px solid ${C.border}`, background:C.bg3, display:'flex', gap:10, justifyContent:'flex-end'}}>
           <button style={S.btnGhost} onClick={onClose}>Cancelar</button>
           <button style={S.btnPri} onClick={onSave}>Guardar</button>
         </div>
@@ -227,32 +263,44 @@ export default function App() {
     return arr;
   }, [tx, txFilter, search]);
 
-  const nav = [
-    { id:'dashboard',    label:'Resumen',       icon:'📊' },
-    { id:'transactions', label:'Transacciones', icon:'↕️' },
-    { id:'invoices',     label:'Facturas',      icon:'🧾' },
-    { id:'accounts',     label:'Cuentas',       icon:'🏦' },
-    { id:'reports',      label:'Reportes',      icon:'📈' },
+  const tabs = [
+    { id:'dashboard',    label:'Resumen' },
+    { id:'transactions', label:'Transacciones' },
+    { id:'invoices',     label:'Facturación' },
+    { id:'accounts',     label:'Cuentas' },
+    { id:'reports',      label:'Reportes' },
   ];
 
   const S = {
-    card:     { background:C.bg2, border:`1px solid ${C.border}`, borderRadius:14, padding:22 },
-    input:    { background:C.bg3, border:`1px solid ${C.border}`, borderRadius:8, padding:'9px 14px', fontSize:13, color:C.text, outline:'none', fontFamily:'inherit', width:'100%', boxSizing:'border-box' },
-    label:    { fontSize:11, color:C.text3, fontWeight:600, display:'block', marginBottom:6, letterSpacing:'.5px', textTransform:'uppercase' },
-    btnPri:   { background:C.accent, color:'#fff', border:'none', borderRadius:10, padding:'10px 20px', fontSize:13, fontWeight:600, cursor:'pointer', fontFamily:'inherit' },
-    btnGhost: { background:'transparent', color:C.text2, border:`1px solid ${C.border}`, borderRadius:10, padding:'10px 20px', fontSize:13, cursor:'pointer', fontFamily:'inherit' },
-    btnEdit:  { background:`${C.accent}25`, color:C.accent, border:'none', borderRadius:6, padding:'5px 12px', fontSize:12, cursor:'pointer', fontFamily:'inherit' },
-    btnDel:   { background:`${C.red}20`, color:C.red, border:'none', borderRadius:6, padding:'5px 10px', fontSize:12, cursor:'pointer', fontFamily:'inherit' },
+    card: { background:C.bg2, border:`1px solid ${C.border}`, borderRadius:8, padding:24, boxShadow:C.shadow },
+    cardFlat: { background:C.bg3, borderRadius:8, padding:18 },
+    input: {
+      background: C.bg2, border:`1px solid ${C.borderDark}`, borderRadius:6,
+      padding:'9px 12px', fontSize:14, color:C.text, outline:'none',
+      fontFamily:'inherit', width:'100%', boxSizing:'border-box',
+      transition:'border-color .15s, box-shadow .15s',
+    },
+    label: { fontSize:12, color:C.text2, fontWeight:500, display:'block', marginBottom:6 },
+    btnPri: { background:C.accent, color:'#fff', border:'none', borderRadius:6, padding:'9px 18px', fontSize:14, fontWeight:500, cursor:'pointer', fontFamily:'inherit', display:'inline-flex', alignItems:'center', gap:8, transition:'background .15s' },
+    btnGhost: { background:C.bg2, color:C.text, border:`1px solid ${C.borderDark}`, borderRadius:6, padding:'9px 16px', fontSize:14, fontWeight:500, cursor:'pointer', fontFamily:'inherit', display:'inline-flex', alignItems:'center', gap:6, transition:'background .15s' },
+    btnIcon: { background:'transparent', color:C.text2, border:'none', cursor:'pointer', padding:7, borderRadius:6, display:'inline-flex', alignItems:'center', justifyContent:'center', transition:'background .15s, color .15s' },
+  };
+
+  const focusH = {
+    onFocus: e => { e.target.style.borderColor = C.accent; e.target.style.boxShadow = `0 0 0 3px ${C.accent}20`; },
+    onBlur:  e => { e.target.style.borderColor = C.borderDark; e.target.style.boxShadow = 'none'; },
   };
 
   // ─── PAGE RENDERERS ───────────────────────────────────────────────
 
   const renderDashboard = () => (
     <div className="fade-in">
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:4, flexWrap:'wrap', gap:10}}>
+      {/* HEADER ROW */}
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:24, flexWrap:'wrap', gap:14}}>
         <div>
-          <div style={{fontSize:22, fontWeight:700}}>Resumen Financiero</div>
-          <div style={{fontSize:13, color:C.text2, marginTop:2}}>Empresa Ejemplo S.A.S · Mayo 2025</div>
+          <div style={{fontSize:13, color:C.text3, fontWeight:500, marginBottom:4, letterSpacing:'.2px'}}>EMPRESA EJEMPLO S.A.S · NIT 900.123.456-1</div>
+          <h1 style={{fontSize:28, fontWeight:700, margin:0, color:C.text, letterSpacing:'-.6px'}}>Resumen financiero</h1>
+          <div style={{fontSize:14, color:C.text2, marginTop:4}}>Período: Mayo 2025</div>
         </div>
         <div style={{display:'flex', gap:8}}>
           <select style={{...S.input, width:'auto'}} value={dateFilter} onChange={e => setDateFilter(e.target.value)}>
@@ -261,97 +309,157 @@ export default function App() {
             <option value="month">Este mes</option>
             <option value="year">Este año</option>
           </select>
-          <button style={S.btnGhost} onClick={() => exportCSV(tx, 'transacciones')}>📥 Exportar</button>
+          <button style={S.btnGhost} onClick={() => exportCSV(tx, 'transacciones')}>
+            <Icon.download /> Exportar
+          </button>
         </div>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14, marginTop:18, marginBottom:18}}>
-        <KPI C={C} S={S} label="Balance del mes" value={fmt(balance)}      sub="Ingresos - Gastos"                                       color={balance > 0 ? C.accent2 : C.red} bg={balance > 0 ? C.kpiPos : C.kpiNeg} icon="💰" trend={15} />
-        <KPI C={C} S={S} label="Total ingresos"  value={fmt(totalIncome)}  sub={`${tx.filter(t => t.type === 'income').length} transacciones`}  color={C.accent2} bg={C.kpiPos}     icon="↑"  trend={12} />
-        <KPI C={C} S={S} label="Total gastos"    value={fmt(totalExpense)} sub={`${tx.filter(t => t.type === 'expense').length} transacciones`} color={C.red}     bg={C.kpiNeg}     icon="↓"  trend={-5} />
-        <KPI C={C} S={S} label="Total activos"   value={fmt(totalAssets)}  sub="Todas las cuentas"                                       color={C.accent}  bg={C.kpiNeutral} icon="🏦" />
+
+      {/* KPI ROW — estilo banca, números grandes con border-top de color */}
+      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(240px, 1fr))', gap:16, marginBottom:20}}>
+        {[
+          { l:'Balance del mes',    v:fmt(balance),       sub:'Ingresos − Gastos',    c: balance > 0 ? C.success : C.danger, side: balance > 0 ? C.success : C.danger },
+          { l:'Total ingresos',     v:fmt(totalIncome),   sub:`${tx.filter(t => t.type === 'income').length} transacciones`,  c:C.success, side:C.success, icon:<Icon.arrowUp /> },
+          { l:'Total egresos',      v:fmt(totalExpense),  sub:`${tx.filter(t => t.type === 'expense').length} transacciones`, c:C.danger,  side:C.danger,  icon:<Icon.arrowDown /> },
+          { l:'Total activos',      v:fmt(totalAssets),   sub:'Todas las cuentas',     c:C.accent,  side:C.accent,  icon:<Icon.bank /> },
+        ].map(k => (
+          <div key={k.l} style={{...S.card, borderLeft:`3px solid ${k.side}`, padding:'18px 22px'}}>
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10}}>
+              <div style={{fontSize:12, color:C.text2, fontWeight:500, letterSpacing:'.2px'}}>{k.l}</div>
+              {k.icon && <span style={{color:k.side, opacity:.7, display:'flex'}}>{k.icon}</span>}
+            </div>
+            <div style={{fontSize:24, fontWeight:700, color:k.c, fontFamily:'"SF Mono", Consolas, monospace', letterSpacing:'-.5px', lineHeight:1.1}}>{k.v}</div>
+            <div style={{fontSize:12, color:C.text3, marginTop:6}}>{k.sub}</div>
+          </div>
+        ))}
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'minmax(0,1.5fr) minmax(0,1fr)', gap:14, marginBottom:14}}>
+
+      {/* GRID 2 cols */}
+      <div style={{display:'grid', gridTemplateColumns:'minmax(0,1.5fr) minmax(0,1fr)', gap:16, marginBottom:20}}>
         <div style={S.card}>
-          <div style={{fontSize:14, fontWeight:700, marginBottom:14}}>Ingresos vs Gastos · 6 meses</div>
-          <ResponsiveContainer width="100%" height={210}>
+          <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:18}}>
+            <h2 style={{fontSize:15, fontWeight:600, margin:0, color:C.text, letterSpacing:'-.2px'}}>Ingresos vs Egresos · 6 meses</h2>
+            <div style={{display:'flex', gap:14, fontSize:11, color:C.text2}}>
+              <span style={{display:'inline-flex', alignItems:'center', gap:6}}><span style={{width:10, height:10, borderRadius:2, background:C.success}}/>Ingresos</span>
+              <span style={{display:'inline-flex', alignItems:'center', gap:6}}><span style={{width:10, height:10, borderRadius:2, background:C.danger}}/>Egresos</span>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart data={MONTHLY}>
               <CartesianGrid strokeDasharray="3 3" stroke={C.border} vertical={false} />
-              <XAxis dataKey="mes" tick={{fontSize:11, fill:C.text2}} axisLine={false} tickLine={false} />
+              <XAxis dataKey="mes" tick={{fontSize:12, fill:C.text2}} axisLine={false} tickLine={false} />
               <YAxis tick={{fontSize:11, fill:C.text2}} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000000).toFixed(0)}M`} />
-              <Tooltip contentStyle={{background:C.bg3, border:`1px solid ${C.border}`, borderRadius:8, fontSize:12}} formatter={v => [fmt(v)]} />
-              <Legend wrapperStyle={{fontSize:12}} />
-              <Bar dataKey="ingresos" fill={C.accent2} radius={[4, 4, 0, 0]} name="Ingresos" />
-              <Bar dataKey="gastos"   fill={C.red}     radius={[4, 4, 0, 0]} name="Gastos" />
+              <Tooltip contentStyle={{background:C.bg2, border:`1px solid ${C.border}`, borderRadius:6, fontSize:12, boxShadow:C.shadowMd}} formatter={v => [fmt(v)]} />
+              <Bar dataKey="ingresos" fill={C.success} radius={[3, 3, 0, 0]} name="Ingresos" />
+              <Bar dataKey="gastos"   fill={C.danger}  radius={[3, 3, 0, 0]} name="Egresos" />
             </BarChart>
           </ResponsiveContainer>
         </div>
         <div style={S.card}>
-          <div style={{fontSize:14, fontWeight:700, marginBottom:14}}>Distribución gastos</div>
+          <h2 style={{fontSize:15, fontWeight:600, margin:'0 0 18px', color:C.text, letterSpacing:'-.2px'}}>Distribución de gastos</h2>
           {CATEGORIES.map(c => (
             <div key={c.name} style={{marginBottom:14}}>
-              <div style={{display:'flex', justifyContent:'space-between', marginBottom:5}}>
+              <div style={{display:'flex', justifyContent:'space-between', marginBottom:6}}>
                 <span style={{fontSize:13, color:C.text}}>{c.name}</span>
-                <span style={{fontSize:12, color:C.text2, fontFamily:'monospace'}}>{c.pct}% · {fmt(c.amount)}</span>
+                <span style={{fontSize:12, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{c.pct}% · {fmt(c.amount)}</span>
               </div>
-              <div style={{height:6, background:C.bg3, borderRadius:3, overflow:'hidden'}}>
+              <div style={{height:5, background:C.bg3, borderRadius:3, overflow:'hidden'}}>
                 <div style={{width:`${c.pct}%`, height:'100%', background:c.color, borderRadius:3, transition:'width .5s'}} />
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* RECENT TX TABLE */}
       <div style={S.card}>
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14}}>
-          <div style={{fontSize:14, fontWeight:700}}>Últimas transacciones</div>
-          <button style={{...S.btnGhost, fontSize:12, padding:'5px 12px'}} onClick={() => setPage('transactions')}>Ver todas →</button>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:16}}>
+          <h2 style={{fontSize:15, fontWeight:600, margin:0, color:C.text, letterSpacing:'-.2px'}}>Últimas transacciones</h2>
+          <button style={{...S.btnGhost, padding:'6px 12px', fontSize:13}} onClick={() => setPage('transactions')}>Ver todas →</button>
         </div>
-        {tx.slice(0, 5).map(t => (
-          <div key={t.id} style={{display:'flex', alignItems:'center', gap:14, padding:'10px 0', borderBottom:`1px solid ${C.border}`}}>
-            <div style={{width:38, height:38, borderRadius:10, background: t.type === 'income' ? C.kpiPos : C.kpiNeg, display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, flexShrink:0, color: t.type === 'income' ? C.accent2 : C.red, fontWeight:700}}>
-              {t.type === 'income' ? '↑' : '↓'}
-            </div>
-            <div style={{flex:1, minWidth:0}}>
-              <div style={{fontSize:13, fontWeight:500}}>{t.desc}</div>
-              <div style={{fontSize:11, color:C.text3}}>{t.cat} · {t.account} · {t.date}</div>
-            </div>
-            <div style={{fontFamily:'monospace', fontWeight:700, color: t.type === 'income' ? C.accent2 : C.red, fontSize:14, whiteSpace:'nowrap'}}>
-              {t.type === 'income' ? '+' : '-'}{fmt(t.amount)}
-            </div>
-          </div>
-        ))}
+        <div style={{margin:'0 -24px'}}>
+          <table style={{width:'100%', borderCollapse:'collapse'}}>
+            <thead>
+              <tr style={{background:C.bg3, borderTop:`1px solid ${C.border}`, borderBottom:`1px solid ${C.border}`}}>
+                {['Fecha','Descripción','Categoría','Cuenta','Tipo','Monto'].map(h => (
+                  <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'10px 16px', textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tx.slice(0, 5).map(t => (
+                <tr key={t.id} style={{borderBottom:`1px solid ${C.border}`}}>
+                  <td style={{padding:'12px 16px', fontSize:13, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{t.date}</td>
+                  <td style={{padding:'12px 16px', fontSize:13, fontWeight:500, color:C.text}}>{t.desc}</td>
+                  <td style={{padding:'12px 16px', fontSize:13, color:C.text2}}>{t.cat}</td>
+                  <td style={{padding:'12px 16px', fontSize:12, color:C.text2}}>{t.account}</td>
+                  <td style={{padding:'12px 16px'}}>
+                    <span style={{display:'inline-flex', alignItems:'center', gap:5, fontSize:11, fontWeight:600, padding:'3px 9px', borderRadius:4, background: t.type === 'income' ? '#d1fae5' : '#fee2e2', color: t.type === 'income' ? '#065f46' : '#991b1b'}}>
+                      {t.type === 'income' ? <Icon.arrowUp /> : <Icon.arrowDown />}
+                      {t.type === 'income' ? 'Ingreso' : 'Egreso'}
+                    </span>
+                  </td>
+                  <td style={{padding:'12px 16px', fontFamily:'"SF Mono", Consolas, monospace', fontWeight:600, color: t.type === 'income' ? C.success : C.danger, whiteSpace:'nowrap', textAlign:'right'}}>
+                    {t.type === 'income' ? '+' : '−'}{fmt(t.amount)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 
   const renderTransactions = () => (
     <div className="fade-in">
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:4, flexWrap:'wrap', gap:10}}>
-        <div style={{fontSize:22, fontWeight:700}}>Transacciones</div>
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:24, flexWrap:'wrap', gap:14}}>
+        <div>
+          <h1 style={{fontSize:24, fontWeight:700, margin:0, color:C.text, letterSpacing:'-.5px'}}>Transacciones</h1>
+          <div style={{fontSize:14, color:C.text2, marginTop:4}}>{filteredTx.length} de {tx.length} registros</div>
+        </div>
         <div style={{display:'flex', gap:8}}>
-          <button style={S.btnGhost} onClick={() => exportCSV(filteredTx, 'transacciones')}>📥 Exportar</button>
-          <button style={S.btnPri}   onClick={() => { setModal('tx'); setEditTarget(null); setForm({type:'income', cat:'Ingresos'}); }}>+ Registrar</button>
+          <button style={S.btnGhost} onClick={() => exportCSV(filteredTx, 'transacciones')}><Icon.download /> Exportar</button>
+          <button style={S.btnPri} onClick={() => { setModal('tx'); setEditTarget(null); setForm({type:'income', cat:'Ingresos'}); }}>
+            <Icon.plus /> Registrar
+          </button>
         </div>
       </div>
-      <div style={{fontSize:13, color:C.text2, marginBottom:18}}>{filteredTx.length} de {tx.length} transacciones</div>
-      <div style={{display:'flex', gap:10, marginBottom:16, flexWrap:'wrap'}}>
-        <input style={{...S.input, maxWidth:280}} placeholder="🔍 Buscar..." value={search} onChange={e => setSearch(e.target.value)} />
-        {[{v:'all', l:'Todas'}, {v:'income', l:'Ingresos'}, {v:'expense', l:'Gastos'}].map(f => (
-          <button
-            key={f.v}
-            onClick={() => setTxFilter(f.v)}
-            style={{background: txFilter === f.v ? C.accent : 'transparent', color: txFilter === f.v ? '#fff' : C.text2, border:`1px solid ${txFilter === f.v ? C.accent : C.border}`, borderRadius:100, padding:'7px 18px', fontSize:13, cursor:'pointer', fontFamily:'inherit'}}
-          >
-            {f.l}
-          </button>
-        ))}
+
+      {/* FILTERS */}
+      <div style={{display:'flex', gap:10, marginBottom:16, flexWrap:'wrap', alignItems:'center'}}>
+        <div style={{flex:1, minWidth:240, position:'relative', maxWidth:380}}>
+          <span style={{position:'absolute', left:12, top:'50%', transform:'translateY(-50%)', color:C.text3}}>{Icon.search()}</span>
+          <input style={{...S.input, paddingLeft:36}} placeholder="Buscar por descripción o categoría..." value={search} onChange={e => setSearch(e.target.value)} {...focusH} />
+        </div>
+        <div style={{display:'flex', borderRadius:6, border:`1px solid ${C.borderDark}`, overflow:'hidden'}}>
+          {[{v:'all', l:'Todas'}, {v:'income', l:'Ingresos'}, {v:'expense', l:'Egresos'}].map((f, i, arr) => (
+            <button
+              key={f.v}
+              onClick={() => setTxFilter(f.v)}
+              style={{
+                background: txFilter === f.v ? C.accent : C.bg2,
+                color:      txFilter === f.v ? '#fff' : C.text2,
+                border:'none',
+                borderRight: i < arr.length - 1 ? `1px solid ${C.borderDark}` : 'none',
+                padding:'9px 18px', fontSize:13, fontWeight:500, cursor:'pointer', fontFamily:'inherit',
+                transition:'all .15s',
+              }}
+            >
+              {f.l}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* TABLE */}
       <div style={{...S.card, padding:0, overflow:'hidden'}}>
         <div style={{overflowX:'auto'}}>
-          <table style={{width:'100%', borderCollapse:'collapse', minWidth:800}}>
+          <table style={{width:'100%', borderCollapse:'collapse', minWidth:780}}>
             <thead>
               <tr style={{background:C.bg3}}>
                 {['Fecha','Descripción','Categoría','Cuenta','Tipo','Monto',''].map(h => (
-                  <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'12px 16px', borderBottom:`1px solid ${C.border}`, textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
+                  <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'12px 18px', borderBottom:`1px solid ${C.border}`, textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -360,23 +468,32 @@ export default function App() {
                 <tr key={t.id}
                   onMouseEnter={e => e.currentTarget.style.background = C.bg3}
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  style={{transition:'background .15s', borderBottom:`1px solid ${C.border}`}}>
-                  <td style={{padding:'12px 16px', fontSize:13, color:C.text2, fontFamily:'monospace'}}>{t.date}</td>
-                  <td style={{padding:'12px 16px', fontSize:13, fontWeight:500}}>{t.desc}</td>
-                  <td style={{padding:'12px 16px', fontSize:13, color:C.text2}}>{t.cat}</td>
-                  <td style={{padding:'12px 16px', fontSize:12, color:C.text2}}>{t.account}</td>
-                  <td style={{padding:'12px 16px'}}>
-                    <span style={{fontSize:11, fontWeight:600, padding:'3px 10px', borderRadius:12, background: t.type === 'income' ? C.kpiPos : C.kpiNeg, color: t.type === 'income' ? C.accent2 : C.red}}>
-                      {t.type === 'income' ? 'Ingreso' : 'Gasto'}
+                  style={{transition:'background .12s', borderBottom:`1px solid ${C.border}`}}>
+                  <td style={{padding:'14px 18px', fontSize:13, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{t.date}</td>
+                  <td style={{padding:'14px 18px', fontSize:13, fontWeight:500, color:C.text}}>{t.desc}</td>
+                  <td style={{padding:'14px 18px', fontSize:13, color:C.text2}}>{t.cat}</td>
+                  <td style={{padding:'14px 18px', fontSize:12, color:C.text2}}>{t.account}</td>
+                  <td style={{padding:'14px 18px'}}>
+                    <span style={{display:'inline-flex', alignItems:'center', gap:5, fontSize:11, fontWeight:600, padding:'3px 9px', borderRadius:4, background: t.type === 'income' ? '#d1fae5' : '#fee2e2', color: t.type === 'income' ? '#065f46' : '#991b1b'}}>
+                      {t.type === 'income' ? <Icon.arrowUp /> : <Icon.arrowDown />}
+                      {t.type === 'income' ? 'Ingreso' : 'Egreso'}
                     </span>
                   </td>
-                  <td style={{padding:'12px 16px', fontFamily:'monospace', fontWeight:700, color: t.type === 'income' ? C.accent2 : C.red, whiteSpace:'nowrap'}}>
-                    {t.type === 'income' ? '+' : '-'}{fmt(t.amount)}
+                  <td style={{padding:'14px 18px', fontFamily:'"SF Mono", Consolas, monospace', fontWeight:600, color: t.type === 'income' ? C.success : C.danger, whiteSpace:'nowrap', textAlign:'right'}}>
+                    {t.type === 'income' ? '+' : '−'}{fmt(t.amount)}
                   </td>
-                  <td style={{padding:'12px 16px'}}>
-                    <div style={{display:'flex', gap:6}}>
-                      <button style={S.btnEdit} onClick={() => { setModal('tx'); setEditTarget(t); setForm({ ...t }); }}>✏️</button>
-                      <button style={S.btnDel}  onClick={() => delTx(t.id)}>🗑️</button>
+                  <td style={{padding:'14px 18px'}}>
+                    <div style={{display:'flex', gap:2, justifyContent:'flex-end'}}>
+                      <button style={S.btnIcon} onClick={() => { setModal('tx'); setEditTarget(t); setForm({ ...t }); }} aria-label="Editar"
+                        onMouseEnter={e => { e.currentTarget.style.background = `${C.accent}15`; e.currentTarget.style.color = C.accent; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent';   e.currentTarget.style.color = C.text2; }}>
+                        <Icon.pencil />
+                      </button>
+                      <button style={S.btnIcon} onClick={() => delTx(t.id)} aria-label="Eliminar"
+                        onMouseEnter={e => { e.currentTarget.style.background = `${C.danger}15`; e.currentTarget.style.color = C.danger; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent';   e.currentTarget.style.color = C.text2; }}>
+                        <Icon.trash />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -394,38 +511,40 @@ export default function App() {
     const overdueTotal  = invoices.filter(i => i.status === 'overdue').reduce((s, i) => s + i.amount, 0);
     return (
       <div className="fade-in">
-        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:4, flexWrap:'wrap', gap:10}}>
-          <div style={{fontSize:22, fontWeight:700}}>Facturas</div>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:24, flexWrap:'wrap', gap:14}}>
+          <div>
+            <h1 style={{fontSize:24, fontWeight:700, margin:0, color:C.text, letterSpacing:'-.5px'}}>Facturación</h1>
+            <div style={{fontSize:14, color:C.text2, marginTop:4}}>{invoices.length} facturas registradas</div>
+          </div>
           <div style={{display:'flex', gap:8}}>
-            <button style={S.btnGhost} onClick={() => exportCSV(invoices, 'facturas')}>📥 Exportar</button>
-            <button style={S.btnPri}   onClick={() => { setModal('invoice'); setEditTarget(null); setForm({date:'2025-05-01'}); }}>+ Nueva factura</button>
+            <button style={S.btnGhost} onClick={() => exportCSV(invoices, 'facturas')}><Icon.download /> Exportar</button>
+            <button style={S.btnPri} onClick={() => { setModal('invoice'); setEditTarget(null); setForm({date:'2025-05-01'}); }}>
+              <Icon.plus /> Nueva factura
+            </button>
           </div>
         </div>
-        <div style={{fontSize:13, color:C.text2, marginBottom:18}}>{invoices.length} facturas registradas</div>
-        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14, marginBottom:18}}>
-          <div style={{background:C.kpiPos, border:`1px solid ${C.accent2}30`, borderRadius:12, padding:18}}>
-            <div style={{fontSize:11, color:C.accent2, fontWeight:600, marginBottom:6}}>PAGADAS</div>
-            <div style={{fontSize:22, fontWeight:700, color:C.accent2, fontFamily:'monospace'}}>{fmt(paidTotal)}</div>
-            <div style={{fontSize:12, color:C.text2}}>{invoices.filter(i => i.status === 'paid').length} facturas</div>
-          </div>
-          <div style={{background:'rgba(251,191,36,.12)', border:'1px solid rgba(251,191,36,.3)', borderRadius:12, padding:18}}>
-            <div style={{fontSize:11, color:'#d97706', fontWeight:600, marginBottom:6}}>PENDIENTES</div>
-            <div style={{fontSize:22, fontWeight:700, color:'#d97706', fontFamily:'monospace'}}>{fmt(pendingTotal)}</div>
-            <div style={{fontSize:12, color:C.text2}}>{invoices.filter(i => i.status === 'pending').length} facturas</div>
-          </div>
-          <div style={{background:C.kpiNeg, border:`1px solid ${C.red}30`, borderRadius:12, padding:18}}>
-            <div style={{fontSize:11, color:C.red, fontWeight:600, marginBottom:6}}>VENCIDAS</div>
-            <div style={{fontSize:22, fontWeight:700, color:C.red, fontFamily:'monospace'}}>{fmt(overdueTotal)}</div>
-            <div style={{fontSize:12, color:C.text2}}>{invoices.filter(i => i.status === 'overdue').length} facturas</div>
-          </div>
+
+        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14, marginBottom:20}}>
+          {[
+            { l:'Pagadas',     v:fmt(paidTotal),    n:invoices.filter(i => i.status === 'paid').length,    c:C.success, bg:'#d1fae5', cText:'#065f46' },
+            { l:'Pendientes',  v:fmt(pendingTotal), n:invoices.filter(i => i.status === 'pending').length, c:C.warning, bg:'#fef3c7', cText:'#92400e' },
+            { l:'Vencidas',    v:fmt(overdueTotal), n:invoices.filter(i => i.status === 'overdue').length, c:C.danger,  bg:'#fee2e2', cText:'#991b1b' },
+          ].map(k => (
+            <div key={k.l} style={{background:theme==='dark' ? `${k.c}15` : k.bg, border:`1px solid ${theme==='dark' ? k.c+'30' : 'transparent'}`, borderRadius:8, padding:18}}>
+              <div style={{fontSize:11, color: theme==='dark' ? k.c : k.cText, fontWeight:600, letterSpacing:'.3px', textTransform:'uppercase', marginBottom:6}}>{k.l}</div>
+              <div style={{fontSize:22, fontWeight:700, color: theme==='dark' ? k.c : k.cText, fontFamily:'"SF Mono", Consolas, monospace', letterSpacing:'-.5px'}}>{k.v}</div>
+              <div style={{fontSize:12, color: theme==='dark' ? k.c+'aa' : k.cText, marginTop:4, opacity:.8}}>{k.n} factura{k.n !== 1 ? 's' : ''}</div>
+            </div>
+          ))}
         </div>
+
         <div style={{...S.card, padding:0, overflow:'hidden'}}>
           <div style={{overflowX:'auto'}}>
-            <table style={{width:'100%', borderCollapse:'collapse', minWidth:800}}>
+            <table style={{width:'100%', borderCollapse:'collapse', minWidth:880}}>
               <thead>
                 <tr style={{background:C.bg3}}>
-                  {['N° Factura','Cliente','NIT','Fecha','Vencimiento','Monto','Estado','Acción'].map(h => (
-                    <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'12px 16px', borderBottom:`1px solid ${C.border}`, textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
+                  {['Nº Factura','Cliente','NIT','Fecha','Vencimiento','Monto','Estado','Acciones'].map(h => (
+                    <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'12px 18px', borderBottom:`1px solid ${C.border}`, textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -434,21 +553,36 @@ export default function App() {
                   <tr key={inv.id}
                     onMouseEnter={e => e.currentTarget.style.background = C.bg3}
                     onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                    style={{transition:'background .15s', borderBottom:`1px solid ${C.border}`}}>
-                    <td style={{padding:'12px 16px', fontFamily:'monospace', fontSize:13, color:C.accent, fontWeight:600}}>{inv.id}</td>
-                    <td style={{padding:'12px 16px', fontSize:13, fontWeight:500}}>{inv.client}</td>
-                    <td style={{padding:'12px 16px', fontSize:12, color:C.text2, fontFamily:'monospace'}}>{inv.nit}</td>
-                    <td style={{padding:'12px 16px', fontSize:13, color:C.text2, fontFamily:'monospace'}}>{inv.date}</td>
-                    <td style={{padding:'12px 16px', fontSize:13, color: inv.status === 'overdue' ? C.red : C.text2, fontFamily:'monospace'}}>{inv.due}</td>
-                    <td style={{padding:'12px 16px', fontFamily:'monospace', fontWeight:700}}>{fmt(inv.amount)}</td>
-                    <td style={{padding:'12px 16px'}}>
-                      <span style={{fontSize:11, fontWeight:600, padding:'3px 10px', borderRadius:12, background:invoiceStatus[inv.status].bg, color:invoiceStatus[inv.status].c}}>{invoiceStatus[inv.status].l}</span>
+                    style={{transition:'background .12s', borderBottom:`1px solid ${C.border}`}}>
+                    <td style={{padding:'14px 18px', fontFamily:'"SF Mono", Consolas, monospace', fontSize:13, color:C.accent, fontWeight:600}}>{inv.id}</td>
+                    <td style={{padding:'14px 18px', fontSize:13, fontWeight:500, color:C.text}}>{inv.client}</td>
+                    <td style={{padding:'14px 18px', fontSize:12, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{inv.nit}</td>
+                    <td style={{padding:'14px 18px', fontSize:13, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{inv.date}</td>
+                    <td style={{padding:'14px 18px', fontSize:13, color: inv.status === 'overdue' ? C.danger : C.text2, fontFamily:'"SF Mono", Consolas, monospace', fontWeight: inv.status === 'overdue' ? 600 : 400}}>{inv.due}</td>
+                    <td style={{padding:'14px 18px', fontFamily:'"SF Mono", Consolas, monospace', fontWeight:600, color:C.text, textAlign:'right'}}>{fmt(inv.amount)}</td>
+                    <td style={{padding:'14px 18px'}}>
+                      <span style={{fontSize:11, fontWeight:600, padding:'4px 10px', borderRadius:100, background:invoiceStatus[inv.status].bg, color:invoiceStatus[inv.status].c, display:'inline-flex', alignItems:'center', gap:6}}>
+                        <span style={{width:6, height:6, borderRadius:'50%', background:invoiceStatus[inv.status].dot}} />
+                        {invoiceStatus[inv.status].l}
+                      </span>
                     </td>
-                    <td style={{padding:'12px 16px'}}>
-                      <div style={{display:'flex', gap:6}}>
-                        {inv.status !== 'paid' && <button style={{...S.btnEdit, background:`${C.accent2}20`, color:C.accent2}} onClick={() => markPaidInvoice(inv.id)}>✓ Pagar</button>}
-                        <button style={S.btnEdit} onClick={() => { setModal('invoice'); setEditTarget(inv); setForm({ ...inv }); }}>✏️</button>
-                        <button style={S.btnDel}  onClick={() => delInvoice(inv.id)}>🗑️</button>
+                    <td style={{padding:'14px 18px'}}>
+                      <div style={{display:'flex', gap:6, justifyContent:'flex-end'}}>
+                        {inv.status !== 'paid' && (
+                          <button onClick={() => markPaidInvoice(inv.id)} style={{background:'transparent', color:C.success, border:`1px solid ${C.success}40`, borderRadius:6, padding:'5px 10px', fontSize:12, fontWeight:600, cursor:'pointer', fontFamily:'inherit', display:'inline-flex', alignItems:'center', gap:5}}>
+                            <Icon.check /> Pagar
+                          </button>
+                        )}
+                        <button style={S.btnIcon} onClick={() => { setModal('invoice'); setEditTarget(inv); setForm({ ...inv }); }} aria-label="Editar"
+                          onMouseEnter={e => { e.currentTarget.style.background = `${C.accent}15`; e.currentTarget.style.color = C.accent; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'transparent';   e.currentTarget.style.color = C.text2; }}>
+                          <Icon.pencil />
+                        </button>
+                        <button style={S.btnIcon} onClick={() => delInvoice(inv.id)} aria-label="Eliminar"
+                          onMouseEnter={e => { e.currentTarget.style.background = `${C.danger}15`; e.currentTarget.style.color = C.danger; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'transparent';   e.currentTarget.style.color = C.text2; }}>
+                          <Icon.trash />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -463,32 +597,34 @@ export default function App() {
 
   const renderAccounts = () => (
     <div className="fade-in">
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:4, flexWrap:'wrap', gap:10}}>
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-end', marginBottom:24, flexWrap:'wrap', gap:14}}>
         <div>
-          <div style={{fontSize:22, fontWeight:700}}>Cuentas</div>
-          <div style={{fontSize:13, color:C.text2, marginTop:2}}>Total activos: <strong style={{color:C.accent}}>{fmt(totalAssets)}</strong></div>
+          <h1 style={{fontSize:24, fontWeight:700, margin:0, color:C.text, letterSpacing:'-.5px'}}>Cuentas</h1>
+          <div style={{fontSize:14, color:C.text2, marginTop:4}}>Total activos · <strong style={{color:C.accent, fontFamily:'"SF Mono", Consolas, monospace'}}>{fmt(totalAssets)}</strong></div>
         </div>
-        <button style={S.btnPri} onClick={() => showToast('Próximamente: agregar cuenta')}>+ Nueva cuenta</button>
+        <button style={S.btnPri} onClick={() => showToast('Próximamente: agregar cuenta')}>
+          <Icon.plus /> Nueva cuenta
+        </button>
       </div>
-      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:14, marginTop:18}}>
+      <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:16}}>
         {accounts.map(a => (
-          <div key={a.id}
-            style={{...S.card, transition:'transform .2s'}}
-            onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
-            onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16}}>
+          <div key={a.id} style={{...S.card, position:'relative', overflow:'hidden'}}>
+            <div style={{position:'absolute', top:0, left:0, right:0, height:3, background:a.color}} />
+            <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:18, marginTop:6}}>
               <div>
-                <div style={{fontSize:15, fontWeight:700, marginBottom:3}}>{a.name}</div>
-                <div style={{fontSize:12, color:C.text2, fontFamily:'monospace'}}>{a.number}</div>
+                <div style={{fontSize:15, fontWeight:600, marginBottom:3, color:C.text, letterSpacing:'-.2px'}}>{a.name}</div>
+                <div style={{fontSize:12, color:C.text2, fontFamily:'"SF Mono", Consolas, monospace'}}>{a.number}</div>
               </div>
-              <div style={{width:42, height:42, borderRadius:12, background:`${a.color}20`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:20}}>{accountIcon(a.type)}</div>
+              <div style={{width:38, height:38, borderRadius:8, background:`${a.color}15`, color:a.color, display:'flex', alignItems:'center', justifyContent:'center'}}>
+                {a.type === 'bank' ? <Icon.bank /> : a.type === 'cash' ? <Icon.cash /> : <Icon.receipt />}
+              </div>
             </div>
-            <div style={{fontSize:26, fontWeight:700, color:a.color, fontFamily:'monospace', marginBottom:4}}>{fmt(a.balance)}</div>
-            <div style={{fontSize:11, color:C.text3}}>Saldo disponible · {a.currency}</div>
-            <div style={{marginTop:16, height:5, background:C.bg3, borderRadius:3}}>
+            <div style={{fontSize:24, fontWeight:700, color:C.text, fontFamily:'"SF Mono", Consolas, monospace', letterSpacing:'-.5px', marginBottom:4}}>{fmt(a.balance)}</div>
+            <div style={{fontSize:11, color:C.text3, marginBottom:14, textTransform:'uppercase', letterSpacing:'.3px'}}>Saldo disponible · {a.currency}</div>
+            <div style={{height:5, background:C.bg3, borderRadius:3, overflow:'hidden'}}>
               <div style={{width:`${Math.round(a.balance / totalAssets * 100)}%`, height:'100%', background:a.color, borderRadius:3, transition:'width .5s'}} />
             </div>
-            <div style={{fontSize:11, color:C.text3, marginTop:5}}>{Math.round(a.balance / totalAssets * 100)}% del total</div>
+            <div style={{fontSize:11, color:C.text2, marginTop:6, fontWeight:500}}>{Math.round(a.balance / totalAssets * 100)}% del total</div>
           </div>
         ))}
       </div>
@@ -499,62 +635,77 @@ export default function App() {
     const pendingTotal = invoices.filter(i => i.status === 'pending').reduce((s, i) => s + i.amount, 0);
     return (
       <div className="fade-in">
-        <div style={{fontSize:22, fontWeight:700, marginBottom:4}}>Reportes</div>
-        <div style={{fontSize:13, color:C.text2, marginBottom:24}}>Análisis financiero detallado</div>
-        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14, marginBottom:18}}>
-          <KPI C={C} S={S} label="Margen bruto"        value={`${totalIncome > 0 ? Math.round((balance / totalIncome) * 100) : 0}%`} sub="Este mes"               color={C.accent2} icon="📊" trend={5} />
-          <KPI C={C} S={S} label="Cuentas por cobrar"  value={fmt(pendingTotal)}                                                       sub="Pendientes"             color="#f59e0b"   icon="📋" />
-          <KPI C={C} S={S} label="Cuentas por pagar"   value={fmt(2400000)}                                                            sub="Próximas a vencer"      color={C.red}     icon="📤" />
-          <KPI C={C} S={S} label="Liquidez"            value="3.2x"                                                                    sub="Ratio activos/pasivos"  color={C.accent}  icon="💧" trend={8} />
+        <div style={{marginBottom:24}}>
+          <h1 style={{fontSize:24, fontWeight:700, margin:0, color:C.text, letterSpacing:'-.5px'}}>Reportes financieros</h1>
+          <div style={{fontSize:14, color:C.text2, marginTop:4}}>Análisis detallado del período</div>
         </div>
-        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:14, marginBottom:14}}>
+
+        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:14, marginBottom:20}}>
+          {[
+            { l:'Margen bruto',         v:`${totalIncome > 0 ? Math.round((balance / totalIncome) * 100) : 0}%`, sub:'Este mes',              c:C.success },
+            { l:'Cuentas por cobrar',   v:fmt(pendingTotal),                                                      sub:'Pendientes',            c:C.warning },
+            { l:'Cuentas por pagar',    v:fmt(2400000),                                                           sub:'Próximas a vencer',     c:C.danger  },
+            { l:'Liquidez',             v:'3.2x',                                                                  sub:'Ratio activos/pasivos', c:C.accent  },
+          ].map(k => (
+            <div key={k.l} style={{...S.card, borderLeft:`3px solid ${k.c}`, padding:'18px 22px'}}>
+              <div style={{fontSize:12, color:C.text2, fontWeight:500, letterSpacing:'.2px', marginBottom:8}}>{k.l}</div>
+              <div style={{fontSize:22, fontWeight:700, color:k.c, fontFamily:'"SF Mono", Consolas, monospace', letterSpacing:'-.5px'}}>{k.v}</div>
+              <div style={{fontSize:12, color:C.text3, marginTop:5}}>{k.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom:20}}>
           <div style={S.card}>
-            <div style={{fontSize:14, fontWeight:700, marginBottom:14}}>Tendencia ingresos</div>
-            <ResponsiveContainer width="100%" height={210}>
+            <h2 style={{fontSize:15, fontWeight:600, margin:'0 0 18px', color:C.text, letterSpacing:'-.2px'}}>Tendencia de ingresos</h2>
+            <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={MONTHLY}>
                 <defs>
-                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%"  stopColor={C.accent2} stopOpacity={0.4} />
-                    <stop offset="95%" stopColor={C.accent2} stopOpacity={0} />
+                  <linearGradient id="contaArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"  stopColor={C.success} stopOpacity={0.4} />
+                    <stop offset="100%" stopColor={C.success} stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={C.border} vertical={false} />
-                <XAxis dataKey="mes" tick={{fontSize:11, fill:C.text2}} axisLine={false} tickLine={false} />
+                <XAxis dataKey="mes" tick={{fontSize:12, fill:C.text2}} axisLine={false} tickLine={false} />
                 <YAxis tick={{fontSize:11, fill:C.text2}} axisLine={false} tickLine={false} tickFormatter={v => `$${(v/1000000).toFixed(0)}M`} />
-                <Tooltip contentStyle={{background:C.bg3, border:`1px solid ${C.border}`, borderRadius:8, fontSize:12}} formatter={v => [fmt(v)]} />
-                <Area type="monotone" dataKey="ingresos" stroke={C.accent2} strokeWidth={2} fill="url(#g1)" />
+                <Tooltip contentStyle={{background:C.bg2, border:`1px solid ${C.border}`, borderRadius:6, fontSize:12, boxShadow:C.shadowMd}} formatter={v => [fmt(v)]} />
+                <Area type="monotone" dataKey="ingresos" stroke={C.success} strokeWidth={2} fill="url(#contaArea)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
           <div style={S.card}>
-            <div style={{fontSize:14, fontWeight:700, marginBottom:14}}>Categorías de gasto</div>
-            <ResponsiveContainer width="100%" height={210}>
+            <h2 style={{fontSize:15, fontWeight:600, margin:'0 0 18px', color:C.text, letterSpacing:'-.2px'}}>Categorías de gasto</h2>
+            <ResponsiveContainer width="100%" height={220}>
               <PieChart>
-                <Pie data={CATEGORIES.map(c => ({ ...c, value:c.pct }))} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={3} dataKey="value">
-                  {CATEGORIES.map(c => <Cell key={c.name} fill={c.color} />)}
+                <Pie data={CATEGORIES.map(c => ({ ...c, value:c.pct }))} cx="50%" cy="50%" innerRadius={50} outerRadius={85} paddingAngle={2} dataKey="value">
+                  {CATEGORIES.map(c => <Cell key={c.name} fill={c.color} stroke={C.bg2} strokeWidth={2} />)}
                 </Pie>
-                <Tooltip contentStyle={{background:C.bg3, border:`1px solid ${C.border}`, borderRadius:8, fontSize:12}} />
-                <Legend wrapperStyle={{fontSize:11}} />
+                <Tooltip contentStyle={{background:C.bg2, border:`1px solid ${C.border}`, borderRadius:6, fontSize:12, boxShadow:C.shadowMd}} />
+                <Legend wrapperStyle={{fontSize:11}} iconType="square" />
               </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
+
         <div style={S.card}>
-          <div style={{fontSize:14, fontWeight:700, marginBottom:14}}>Resumen por cuenta</div>
-          <div style={{overflowX:'auto'}}>
+          <h2 style={{fontSize:15, fontWeight:600, margin:'0 0 16px', color:C.text, letterSpacing:'-.2px'}}>Resumen por cuenta</h2>
+          <div style={{margin:'0 -24px'}}>
             <table style={{width:'100%', borderCollapse:'collapse'}}>
               <thead>
-                <tr>{['Cuenta','Tipo','Balance','% del total'].map(h => (
-                  <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'10px 12px', borderBottom:`1px solid ${C.border}`, textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
-                ))}</tr>
+                <tr style={{background:C.bg3, borderTop:`1px solid ${C.border}`, borderBottom:`1px solid ${C.border}`}}>
+                  {['Cuenta','Tipo','Balance','% del total'].map(h => (
+                    <th key={h} style={{fontSize:11, color:C.text2, fontWeight:600, textAlign:'left', padding:'10px 18px', textTransform:'uppercase', letterSpacing:'.3px'}}>{h}</th>
+                  ))}
+                </tr>
               </thead>
               <tbody>
                 {accounts.map(a => (
-                  <tr key={a.id}>
-                    <td style={{padding:'12px', fontWeight:600, fontSize:13}}>{a.name}</td>
-                    <td style={{padding:'12px', fontSize:12, color:C.text2}}>{a.type === 'bank' ? 'Banco' : a.type === 'cash' ? 'Efectivo' : 'Por cobrar'}</td>
-                    <td style={{padding:'12px', fontFamily:'monospace', fontWeight:700, color:a.color}}>{fmt(a.balance)}</td>
-                    <td style={{padding:'12px', fontFamily:'monospace', fontSize:13}}>{Math.round(a.balance / totalAssets * 100)}%</td>
+                  <tr key={a.id} style={{borderBottom:`1px solid ${C.border}`}}>
+                    <td style={{padding:'12px 18px', fontWeight:500, fontSize:13, color:C.text}}>{a.name}</td>
+                    <td style={{padding:'12px 18px', fontSize:12, color:C.text2}}>{a.type === 'bank' ? 'Banco' : a.type === 'cash' ? 'Efectivo' : 'Por cobrar'}</td>
+                    <td style={{padding:'12px 18px', fontFamily:'"SF Mono", Consolas, monospace', fontWeight:600, color:a.color, textAlign:'right'}}>{fmt(a.balance)}</td>
+                    <td style={{padding:'12px 18px', fontFamily:'"SF Mono", Consolas, monospace', fontSize:13, color:C.text2}}>{Math.round(a.balance / totalAssets * 100)}%</td>
                   </tr>
                 ))}
               </tbody>
@@ -574,61 +725,65 @@ export default function App() {
   }[page] || renderDashboard;
 
   return (
-    <div style={{position:'relative', minHeight:'100vh', background:C.bg, fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif", color:C.text, fontSize:14}}>
+    <div style={{minHeight:'100vh', background:C.bg, fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif", color:C.text, fontSize:14}}>
 
-      {/* MODAL: TRANSACTION */}
+      {/* MODALS */}
       {modal === 'tx' && (
         <Modal title={editTarget ? 'Editar transacción' : 'Nueva transacción'} onSave={saveTransaction} onClose={closeModal} C={C} S={S}>
           <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:14}}>
-            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Descripción *</label><input style={S.input} value={form.desc||''} onChange={fv('desc')} placeholder="Descripción de la transacción" autoComplete="off" /></div>
+            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Descripción *</label><input style={S.input} value={form.desc||''} onChange={fv('desc')} placeholder="Descripción de la transacción" autoComplete="off" {...focusH} /></div>
             <div><label style={S.label}>Tipo</label>
-              <select style={S.input} value={form.type||'income'} onChange={fv('type')}>
+              <select style={S.input} value={form.type||'income'} onChange={fv('type')} {...focusH}>
                 <option value="income">Ingreso</option>
-                <option value="expense">Gasto</option>
+                <option value="expense">Egreso</option>
               </select>
             </div>
-            <div><label style={S.label}>Monto (COP) *</label><input style={S.input} type="number" min="0" value={form.amount||''} onChange={fv('amount')} placeholder="0" /></div>
+            <div><label style={S.label}>Monto (COP) *</label><input style={S.input} type="number" min="0" value={form.amount||''} onChange={fv('amount')} placeholder="0" {...focusH} /></div>
             <div><label style={S.label}>Categoría</label>
-              <select style={S.input} value={form.cat||''} onChange={fv('cat')}>
+              <select style={S.input} value={form.cat||''} onChange={fv('cat')} {...focusH}>
                 <option value="">Seleccionar...</option>
                 <option>Ingresos</option><option>Compras</option><option>Nómina</option>
                 <option>Gastos fijos</option><option>Comisiones</option><option>Otros</option>
               </select>
             </div>
             <div><label style={S.label}>Cuenta</label>
-              <select style={S.input} value={form.account||''} onChange={fv('account')}>
+              <select style={S.input} value={form.account||''} onChange={fv('account')} {...focusH}>
                 <option value="">Seleccionar...</option>
                 {accounts.map(a => <option key={a.id} value={a.name}>{a.name}</option>)}
               </select>
             </div>
-            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Fecha</label><input style={S.input} type="date" value={form.date||''} onChange={fv('date')} /></div>
+            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Fecha</label><input style={S.input} type="date" value={form.date||''} onChange={fv('date')} {...focusH} /></div>
           </div>
         </Modal>
       )}
 
-      {/* MODAL: INVOICE */}
       {modal === 'invoice' && (
         <Modal title={editTarget ? 'Editar factura' : 'Nueva factura'} onSave={saveInvoice} onClose={closeModal} C={C} S={S}>
           <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:14}}>
-            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Cliente *</label><input style={S.input} value={form.client||''} onChange={fv('client')} placeholder="Empresa ABC S.A.S" autoComplete="off" /></div>
-            <div><label style={S.label}>NIT</label><input style={S.input} value={form.nit||''} onChange={fv('nit')} placeholder="900000000-0" autoComplete="off" /></div>
-            <div><label style={S.label}>N° de items</label><input style={S.input} type="number" min="1" value={form.items||''} onChange={fv('items')} placeholder="1" /></div>
-            <div><label style={S.label}>Fecha emisión</label><input style={S.input} type="date" value={form.date||''} onChange={fv('date')} /></div>
-            <div><label style={S.label}>Fecha vencimiento</label><input style={S.input} type="date" value={form.due||''} onChange={fv('due')} /></div>
-            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Monto total (COP) *</label><input style={S.input} type="number" min="0" value={form.amount||''} onChange={fv('amount')} placeholder="0" /></div>
+            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Cliente *</label><input style={S.input} value={form.client||''} onChange={fv('client')} placeholder="Empresa ABC S.A.S" autoComplete="off" {...focusH} /></div>
+            <div><label style={S.label}>NIT</label><input style={S.input} value={form.nit||''} onChange={fv('nit')} placeholder="900000000-0" autoComplete="off" {...focusH} /></div>
+            <div><label style={S.label}>Nº de items</label><input style={S.input} type="number" min="1" value={form.items||''} onChange={fv('items')} placeholder="1" {...focusH} /></div>
+            <div><label style={S.label}>Fecha emisión</label><input style={S.input} type="date" value={form.date||''} onChange={fv('date')} {...focusH} /></div>
+            <div><label style={S.label}>Fecha vencimiento</label><input style={S.input} type="date" value={form.due||''} onChange={fv('due')} {...focusH} /></div>
+            <div style={{gridColumn:'1/-1'}}><label style={S.label}>Monto total (COP) *</label><input style={S.input} type="number" min="0" value={form.amount||''} onChange={fv('amount')} placeholder="0" {...focusH} /></div>
           </div>
         </Modal>
       )}
 
       {/* CONFIRM */}
       {confirm && (
-        <div style={{position:'fixed', top:0, left:0, width:'100%', height:'100%', background:'rgba(0,0,0,.5)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:16}} onClick={() => setConfirm(null)}>
-          <div style={{...S.card, maxWidth:380, textAlign:'center'}} onClick={e => e.stopPropagation()}>
-            <div style={{fontSize:36, marginBottom:14}}>⚠️</div>
-            <div style={{fontSize:15, fontWeight:600, marginBottom:20}}>{confirm.msg}</div>
-            <div style={{display:'flex', gap:10, justifyContent:'center'}}>
+        <div style={{position:'fixed', inset:0, background:'rgba(15, 23, 42, .55)', zIndex:1000, display:'flex', alignItems:'center', justifyContent:'center', padding:16}} onClick={() => setConfirm(null)}>
+          <div style={{background:C.bg2, borderRadius:8, padding:0, maxWidth:400, width:'100%', boxShadow:C.shadowLg, border:`1px solid ${C.border}`, overflow:'hidden'}} onClick={e => e.stopPropagation()}>
+            <div style={{padding:24, textAlign:'center'}}>
+              <div style={{width:48, height:48, borderRadius:'50%', background:`${C.danger}15`, color:C.danger, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 14px'}}>
+                {Icon.alert()}
+              </div>
+              <div style={{fontSize:16, fontWeight:600, marginBottom:6, color:C.text}}>{confirm.msg}</div>
+              <div style={{fontSize:13, color:C.text2}}>Esta acción no se puede deshacer.</div>
+            </div>
+            <div style={{padding:'14px 24px', background:C.bg3, borderTop:`1px solid ${C.border}`, display:'flex', gap:10, justifyContent:'flex-end'}}>
               <button style={S.btnGhost} onClick={() => setConfirm(null)}>Cancelar</button>
-              <button style={{...S.btnPri, background:C.red}} onClick={confirm.onYes}>Eliminar</button>
+              <button style={{...S.btnPri, background:C.danger}} onClick={confirm.onYes}>Eliminar</button>
             </div>
           </div>
         </div>
@@ -636,39 +791,85 @@ export default function App() {
 
       {/* TOAST */}
       {toast && (
-        <div role="status" aria-live="polite" style={{position:'fixed', bottom:24, right:24, background: toast.type === 'error' ? C.red : C.accent2, color:'#fff', padding:'12px 20px', borderRadius:10, fontSize:13, fontWeight:600, zIndex:1001, boxShadow:'0 8px 24px rgba(0,0,0,.2)', display:'flex', alignItems:'center', gap:10}}>
-          {toast.type === 'error' ? '❌' : '✅'} {toast.msg}
+        <div role="status" aria-live="polite" style={{position:'fixed', bottom:24, right:24, background:C.bg2, color:C.text, padding:'12px 18px', borderRadius:8, fontSize:14, fontWeight:500, zIndex:1001, boxShadow:C.shadowLg, display:'flex', alignItems:'center', gap:10, borderLeft:`4px solid ${toast.type === 'error' ? C.danger : C.success}`}}>
+          <span style={{color: toast.type === 'error' ? C.danger : C.success}}>
+            {toast.type === 'error' ? Icon.alert() : Icon.check()}
+          </span>
+          {toast.msg}
         </div>
       )}
 
-      <div style={{display:'grid', gridTemplateColumns:'220px 1fr'}}>
-        {/* SIDEBAR */}
-        <div style={{background:C.bg2, borderRight:`1px solid ${C.border}`, minHeight:'100vh', padding:'22px 0', display:'flex', flexDirection:'column', position:'sticky', top:0}}>
-          <div style={{padding:'0 20px 22px', borderBottom:`1px solid ${C.border}`, marginBottom:14}}>
-            <div style={{fontSize:18, fontWeight:700, color:C.accent}}>ContaFácil</div>
-            <div style={{fontSize:11, color:C.text2, marginTop:2}}>Empresa Ejemplo S.A.S</div>
+      {/* HEADER NAVY OSCURO */}
+      <header style={{
+        background: theme === 'dark' ? C.bg2 : C.primary,
+        color:'#f1f5f9',
+        padding:'12px 32px',
+      }}>
+        <div style={{maxWidth:1400, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'space-between', gap:20}}>
+          <div style={{display:'flex', alignItems:'center', gap:14}}>
+            <div style={{
+              width:38, height:38, borderRadius:8,
+              background:`linear-gradient(135deg, ${C.accent}, ${C.accent2})`,
+              display:'flex', alignItems:'center', justifyContent:'center',
+              color:'#fff',
+            }}>
+              {Icon.building()}
+            </div>
+            <div>
+              <div style={{fontWeight:700, fontSize:17, letterSpacing:'-.3px'}}>ContaFácil</div>
+              <div style={{fontSize:11, opacity:.65, marginTop:1, letterSpacing:'.2px'}}>Empresa Ejemplo S.A.S · NIT 900.123.456-1</div>
+            </div>
           </div>
-          {nav.map(n => (
-            <div key={n.id}
-              onClick={() => setPage(n.id)}
-              role="button" tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPage(n.id); } }}
-              style={{display:'flex', alignItems:'center', gap:10, padding:'10px 20px', cursor:'pointer', fontSize:13, background: page === n.id ? `${C.accent}14` : 'transparent', color: page === n.id ? C.accent : C.text2, fontWeight: page === n.id ? 600 : 400, borderRight: page === n.id ? `3px solid ${C.accent}` : '3px solid transparent', transition:'all .15s', marginBottom:2, userSelect:'none'}}>
-              <span style={{fontSize:16}}>{n.icon}</span>{n.label}
+          <div style={{display:'flex', alignItems:'center', gap:14}}>
+            <div style={{
+              padding:'7px 14px', background:'rgba(255,255,255,.08)',
+              borderRadius:6, fontSize:12, fontWeight:600,
+              display:'flex', alignItems:'center', gap:8,
+            }}>
+              <span style={{opacity:.7, fontSize:10, letterSpacing:'.4px', textTransform:'uppercase'}}>Balance</span>
+              <span style={{color: balance > 0 ? '#34d399' : '#f87171', fontFamily:'"SF Mono", Consolas, monospace'}}>{fmt(balance)}</span>
             </div>
-          ))}
-          <div style={{marginTop:'auto', padding:'18px', borderTop:`1px solid ${C.border}`}}>
-            <div style={{background:C.bg3, borderRadius:10, padding:14, marginBottom:12}}>
-              <div style={{fontSize:11, color:C.text3, marginBottom:4}}>BALANCE ACTUAL</div>
-              <div style={{fontSize:18, fontWeight:700, color: balance > 0 ? C.accent2 : C.red, fontFamily:'monospace'}}>{fmt(balance)}</div>
-            </div>
-            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')} style={{...S.btnGhost, fontSize:12, padding:'7px 14px', width:'100%'}}>
-              {theme === 'light' ? '🌙 Modo oscuro' : '☀️ Modo claro'}
+            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')} aria-label="Tema" style={{background:'rgba(255,255,255,.08)', border:'none', color:'#fff', width:34, height:34, borderRadius:6, cursor:'pointer', display:'inline-flex', alignItems:'center', justifyContent:'center'}}>
+              {theme === 'light' ? Icon.moon() : Icon.sun()}
             </button>
+            <div style={{width:32, height:32, borderRadius:'50%', background:`linear-gradient(135deg,${C.accent},${C.accent2})`, color:'#fff', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:13}}>JM</div>
           </div>
         </div>
-        <div style={{padding:'24px 30px', overflowY:'auto'}}>{pageRender()}</div>
+      </header>
+
+      {/* TAB BAR */}
+      <div style={{background:C.bg2, borderBottom:`1px solid ${C.border}`, padding:'0 32px'}}>
+        <div style={{maxWidth:1400, margin:'0 auto', display:'flex', gap:0, overflowX:'auto'}}>
+          {tabs.map(t => {
+            const active = page === t.id;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setPage(t.id)}
+                style={{
+                  background:'transparent',
+                  color: active ? C.accent : C.text2,
+                  border:'none',
+                  borderBottom: active ? `2px solid ${C.accent}` : '2px solid transparent',
+                  padding:'14px 20px', fontSize:14, fontWeight: active ? 600 : 500,
+                  cursor:'pointer', fontFamily:'inherit',
+                  whiteSpace:'nowrap', transition:'all .15s',
+                  marginBottom:-1,
+                }}
+                onMouseEnter={e => { if (!active) e.currentTarget.style.color = C.text; }}
+                onMouseLeave={e => { if (!active) e.currentTarget.style.color = C.text2; }}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
+
+      {/* MAIN */}
+      <main style={{maxWidth:1400, margin:'0 auto', padding:'28px 32px 60px'}}>
+        {pageRender()}
+      </main>
     </div>
   );
 }
